@@ -1,0 +1,4 @@
+{
+    "name": "seller",
+    "main": "./lib/seller.js"
+}
