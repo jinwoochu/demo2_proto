@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>등록된 상품들</h1>
+    <span>총 <%=products.length%>개의 상품</span><br>
+    <script>
+        var row = <%-JSON.stringify(products)%>
+        console.log(row);
+    </script>
+
+
+
+    <% for(var i=0; i<products.length; i++) {%>
+        <table width="100%" border="3">
+            <tr>
+                <td>
+                    제품 식별번호
+                </td>
+                <td>
+                    <%=products[i].id%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    판매자 식별번호
+                </td>
+                <td>
+                    <%=products[i].seller_id%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    제품 사진
+                </td>
+                <td>
+                    <%=products[i].picture%>
+                </td>
+            </tr>
+        </table>
+        <form method="post" action="/buyProduct">
+            <input type="text" name=id value=<%=products[i].id%> hidden=true>
+            <input type="text" name=sellerId value=<%=products[i].seller_id%> hidden=true>
+            <input type="submit" value="buy_product">
+        </form>
+        <form method="post" action="/showProductDetail">
+            <input type="text" name=id value=<%=products[i].id%> hidden=true>
+            <input type="text" name=sellerId value=<%=products[i].seller_id%> hidden=true>
+            <input type="submit" value="showProductDetail">
+        </form>
+        <br><br>
+        <% } %>
+</body>
+
+</html>

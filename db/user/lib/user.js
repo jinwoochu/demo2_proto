@@ -14,7 +14,7 @@ var con = mysql.createConnection({
     database: "ling"
 });
 
-var REST_API_ADDRESS = 'http://100.114.52.136:3000/api/';
+var REST_API_ADDRESS = 'http://192.168.192.34:3000/api/';
 
 //유저 회원가입
 exports.register = function(req, res) {
@@ -132,9 +132,54 @@ exports.userMyPage = function(req, res, myCookie) {
             return;
         } else {
             // 성공시 이 쿠키에 해당하는 유저의 보증서만 보여준다.
+            var userId = result[0].id;
 
+            var selectQuery2 = "SELECT * FROM WARRANTYS WHERE buyer_id=?";
+            var selectQueryParams2 = [userId];
+            con.query(selectQuery2, selectQueryParams2, function(err2, result2, field2) {
+                if (err2) {
+                    response = makeResponse(0, "잘못된 쿼리문입니다.", {});
+                    res.json(response);
+                    return;
+                }
+                if (result.length == '0') {
+                    response = makeResponse(0, "잘못된 유저입니다.", {});
+                    res.json(response);
+                    return;
+                } else {
+                    console.log(result2);
+                    res.render('user_my_page.html', { "warrantys": result2 });
+                }
+
+            });
         }
     });
+}
+
+
+exports.existCookie = function(req, res, cookies) {
+
+    // 쿠키에 해당하는 이메일이 DB에 있는지 확인한다.
+    var selectQuery = "SELECT * FROM USERS WHERE email=?";
+    var selectQueryParams = [cookies];
+    con.query(selectQuery, selectQueryParams, function(err, result, field) {
+        if (err) {
+            response = makeResponse(0, "잘못된 쿼리문입니다.", {});
+            res.json(response);
+            return;
+        }
+        if (result.length == '0') {
+            response = makeResponse(0, "잘못된 쿠키입니다.", {});
+            res.json(response);
+            return;
+        } else {
+            response = makeResponse(1, "사용자 쿠키 존재", {});
+            res.json(response);
+        }
+
+    });
+
+
 }
 
 

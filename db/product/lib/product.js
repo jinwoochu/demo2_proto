@@ -14,12 +14,12 @@ var con = mysql.createConnection({
     database: "ling"
 });
 
-var REST_API_ADDRESS = 'http://100.114.52.136:3000/api/';
+var REST_API_ADDRESS = 'http://192.168.192.34:3000/api/';
 
 // 상품 등록
 exports.register = function(req, res, sellerCookie) {
 
-    var sellerId; // 아직 못구함. 쿼리해서 구해야함.
+    var sellerId;
     var name = req.body.name;
     var description = req.body.description;
     var price = req.body.price;
@@ -99,8 +99,23 @@ exports.showProductDetail = function(req, res) {
 
         res.render('product_detail.html', { "productData": productData });
     });
-
 }
+
+
+// 전체 상품 보기
+exports.showAllProducts = function(req, res) {
+
+    var selectQuery = "SELECT * FROM PRODUCTS";
+    con.query(selectQuery, function(err, result, field) {
+        if (err) {
+            response = makeResponse(0, "잘못된 쿼리문입니다.", {});
+            res.json(response);
+            return;
+        }
+        res.render('show_all_products.html', { 'products': result });
+    });
+}
+
 
 
 // 리스폰스 만드는 함수

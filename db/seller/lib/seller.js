@@ -14,7 +14,7 @@ var con = mysql.createConnection({
     database: "ling"
 });
 
-var REST_API_ADDRESS = 'http://100.114.52.136:3000/api/';
+var REST_API_ADDRESS = 'http://192.168.192.34:3000/api/';
 
 // 판매자 회원가입
 exports.register = function(req, res) {

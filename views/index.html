@@ -22,10 +22,8 @@
     </form>
 
     <h2>사용자 로그인</h2>
-    <form id="userLogin">
-        <input type="text" placeholder="email" name="email"> <br>
-        <input type="text" placeholder="password" name="password"> <br>
-        <input type="button" value="register" name="register" onclick="userLoginFunc()">
+    <form action="">
+        <input type="button" value="userLogin" onclick="goUserLogin()">
     </form>
 
     <h2>판매자 회원가입</h2>
@@ -34,24 +32,13 @@
         <input type="text" placeholder="password" name="password"> <br>
         <input type="text" placeholder="phone" name="phone"> <br>
         <input type="text" placeholder="name" name="name"> <br>
-        <input type="text" placeholder="web_site" name="web_site"> <br>w
+        <input type="text" placeholder="web_site" name="web_site"> <br>
         <input type="button" value="register" name="register" onclick="sellerRegisterFunc()">
     </form>
 
     <h2>판매자 로그인</h2>
-    <form id="sellerLogin">
-        <input type="text" placeholder="email" name="email"> <br>
-        <input type="text" placeholder="password" name="password"> <br>
-        <input type="button" value="register" name="register" onclick="sellerLoginFunc()">
-    </form>
-
-    <h2>상품 등록</h2>
-    <form id="productRegister">
-        <input type="text" placeholder="name" name="name"> <br>
-        <input type="text" placeholder="description" name="description"> <br>
-        <input type="text" placeholder="price" name="price"> <br>
-        <input type="text" placeholder="picture" name="picture"> <br>
-        <input type="button" value="register" name="register" onclick="productRegisterFunc()">
+    <form action="">
+        <input type="button" value="sellerLogin" onclick="goSellerLogin()">
     </form>
 
 
@@ -69,17 +56,9 @@
             });
         }
 
-        // 유저 로그인
-        function userLoginFunc() {
-            var reqJsonData = $("#userLogin").serializeObject(); // 폼 데이터 json 형식으로 받기
-            $.ajax({
-                method: 'POST',
-                url: '/userLogin',
-                data: reqJsonData,
-                success: (res) => {
-                    console.log(res)
-                }
-            });
+        // 유저 로그인 페이지로 이동
+        function goUserLogin() {
+            window.location.href = '/userLoginPage';
         }
 
 
@@ -97,32 +76,9 @@
             });
         }
 
-        // 판매자 로그인
-        function sellerLoginFunc() {
-            var reqJsonData = $("#sellerLogin").serializeObject(); // 폼 데이터 json 형식으로 받기
-            $.ajax({
-                method: 'POST',
-                url: '/sellerLogin',
-                data: reqJsonData,
-                success: (res) => {
-                    console.log(res)
-                }
-            });
-        }
-
-
-
-        // 상품 등록
-        function productRegisterFunc() {
-            var reqJsonData = $("#productRegister").serializeObject(); // 폼 데이터 json 형식으로 받기
-            $.ajax({
-                method: 'POST',
-                url: '/productRegister',
-                data: reqJsonData,
-                success: (res) => {
-                    console.log(res)
-                }
-            });
+        // 판매자 로그인 페이지로 이동
+        function goSellerLogin() {
+            window.location.href = '/sellerLoginPage';
         }
     </script>
 

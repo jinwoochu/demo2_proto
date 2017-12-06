@@ -37,16 +37,22 @@
                 <input type="button" value="register" name="register" onclick="productRegisterFunc()">
             </form>
 
+            <br>
+            <h2>로그아웃</h2>
+            <form action="/sellerLogout" method="get">
+                <input type="submit" value="logout">
+            </form>
+
             <script>
                 // 상품 등록
-                function showDetailFunc() {
+                function productRegisterFunc() {
                     var reqJsonData = $("#productRegister").serializeObject(); // 폼 데이터 json 형식으로 받기
                     $.ajax({
                         method: 'POST',
                         url: '/productRegister',
                         data: reqJsonData,
                         success: (res) => {
-                            if (res.status == 1) {
+                            if (res.status == 1) { // 등록성공하면 다시 원래 페이지로 돌아오기 위해
                                 window.location.href = res.participant + 'Mypage'
                             }
                         }

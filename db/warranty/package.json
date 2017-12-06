@@ -1,0 +1,4 @@
+{
+    "name": "warranty",
+    "main": "./lib/warranty.js"
+}

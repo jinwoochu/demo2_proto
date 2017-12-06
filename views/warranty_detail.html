@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <table width="100%" border="3">
+        <tr>
+            <td>보증서 식별번호</td>
+            <td>
+                <%=warrantyData.ID%>
+            </td>
+        </tr>
+        <td>판매자 식별번호</td>
+        <td>
+            <%=warrantyData.sellerId%>
+        </td>
+        <tr>
+            <td>상품 식별번호</td>
+            <td>
+                <%=warrantyData.productId%>
+            </td>
+        </tr>
+        <td>구매자 식별번호</td>
+        <td>
+            <%=warrantyData.userId%>
+        </td>
+        </tr>
+        <tr>
+            <td>보증서 일련번호</td>
+            <td>
+                <%=warrantyData.serialNumber%>
+            </td>
+        </tr>
+        <tr>
+            <td>상품명</td>
+            <td>
+                <%=warrantyData.productName%>
+            </td>
+        </tr>
+        <tr>
+            <td>가격</td>
+            <td>
+                <%=warrantyData.price%>
+            </td>
+        </tr>
+        <tr>
+            <td>구매일</td>
+            <td>
+                <%=warrantyData.purchaseDay%>
+            </td>
+        </tr>
+        <tr>
+            <td>판매처</td>
+            <td>
+                <%=warrantyData.store%>
+            </td>
+        </tr>
+        <tr>
+            <td>판매자</td>
+            <td>
+                <%=warrantyData.seller%>
+            </td>
+        </tr>
+        <tr>
+            <td>보증 만료일</td>
+            <td>
+                <%=warrantyData.ExpireDay%>
+            </td>
+        </tr>
+        <tr>
+            <td>보증내용</td>
+            <td>
+                <%=warrantyData.warrantyContents%>
+            </td>
+        </tr>
+    </table>
+    <input type="button" value="goBack" onclick="goBack()">
+
+    <script>
+        function goBack() {
+            history.back();
+        }
+    </script>
+</body>
+
+</html>

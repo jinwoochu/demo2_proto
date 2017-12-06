@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/jquery-3.2.1.min.js"></script>
+
+</head>
+
+<body>
+    <h2>판매자 로그인</h2>
+    <form id="sellerLogin">
+        <input type="text" placeholder="email" name="email"> <br>
+        <input type="text" placeholder="password" name="password"> <br>
+        <input type="button" value="login" name="login" onclick="sellerLoginFunc()">
+    </form>
+    <script>
+        // 판매자 로그인
+        function sellerLoginFunc() {
+            var reqJsonData = $("#sellerLogin").serializeObject(); // 폼 데이터 json 형식으로 받기
+            $.ajax({
+                method: 'POST',
+                url: '/sellerLogin',
+                data: reqJsonData,
+                success: (res) => {
+                    if (res.status == 1) {
+                        window.location.href = '/sellerMyPage';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

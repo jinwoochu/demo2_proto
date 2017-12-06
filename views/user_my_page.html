@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>userMyPage</title>
+</head>
+
+<body>
+
+    <h1>구매한 상품 보증서</h1>
+    <span>총 <%=warrantys.length%>개의 상품 보증서</span><br>
+    <script>
+        var row = <%-JSON.stringify(warrantys)%>
+        console.log(row);
+    </script>
+
+    <% for(var i=0; i<warrantys.length; i++) {%>
+        <table width="100%" border="3">
+            <tr>
+                <td>
+                    보증서 식별번호
+                </td>
+                <td>
+                    <%=warrantys[i].id%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    판매자 식별번호
+                </td>
+                <td>
+                    <%=warrantys[i].seller_id%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    제품 식별번호
+                </td>
+                <td>
+                    <%=warrantys[i].product_id%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    구매자 식별번호
+                </td>
+                <td>
+                    <%=warrantys[i].buyer_id%>
+                </td>
+            </tr>
+        </table>
+        <form method="post" action="/showWarrantyDetail">
+            <input type="text" name=id value=<%=warrantys[i].id%> hidden=true>
+            <input type="submit" value="showWarrantyDetail">
+        </form>
+        <br>
+        <% } %>
+
+            <h2>상품 보러가기</h2>
+            <form action="/showAllProducts" method="get">
+                <input type="submit" value="show_products">
+            </form>
+
+            <h2>로그아웃</h2>
+            <form action="/userLogout" method="get">
+                <input type="submit" value="logout">
+            </form>
+</body>
+
+</html>
