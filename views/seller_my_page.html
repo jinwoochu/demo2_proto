@@ -19,46 +19,118 @@
     </script>
     <% for(var i=0; i<products.length; i++) {%>
 
+        <table width="100%" border="3">
+            <tr>
+                <td style="width:50%">
+                    <span>제품 식별번호</span>
+                </td>
+                <td style="width:50%">
+                    <span><%=products[i].id%></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%">
+                    <span>판매자 식별번호</span>
+                </td>
+                <td style="width:50%">
+                    <span><%=products[i].seller_id%></span>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:50%">
+                    <span>제품 사진</span>
+                </td>
+                <td style="width:50%">
+                    <span><%=products[i].picture%></span>
+                </td>
+            </tr>
+        </table>
+
         <form method="post" action="/showProductDetail">
-            <input type="text" name=id value=<%=products[i].id%> readonly> <span>제품 식별번호</span><br>
-            <input type="text" name=seller_id value=<%=products[i].seller_id%> readonly> <span>판매자 식별번호</span><br>
-            <input type="text" name=picture value=<%=products[i].picture%> > <span>제품 사진</span><br>
+            <input type="text" name=id value=<%=products[i].id%> hidden=true>
+            <input type="text" name=seller_id value=<%=products[i].seller_id%> hidden=true>
+            <input type="text" name=picture value=<%=products[i].picture%> hidden=true>
             <input type="submit" value="show_detail">
         </form>
         <br>
         <% } %>
 
-            <h2>상품 등록</h2>
-            <form id="productRegister">
-                <input type="text" placeholder="name" name="name"> <br>
-                <input type="text" placeholder="description" name="description"> <br>
-                <input type="text" placeholder="price" name="price"> <br>
-                <input type="text" placeholder="picture" name="picture"> <br>
-                <input type="button" value="register" name="register" onclick="productRegisterFunc()">
-            </form>
-
-            <br>
-            <h2>로그아웃</h2>
-            <form action="/sellerLogout" method="get">
-                <input type="submit" value="logout">
-            </form>
-
+            <h1>팔린 상품 보증서들</h1>
+            <span>총 <%=warrantys.length%>개의 상품</span><br>
             <script>
-                // 상품 등록
-                function productRegisterFunc() {
-                    var reqJsonData = $("#productRegister").serializeObject(); // 폼 데이터 json 형식으로 받기
-                    $.ajax({
-                        method: 'POST',
-                        url: '/productRegister',
-                        data: reqJsonData,
-                        success: (res) => {
-                            if (res.status == 1) { // 등록성공하면 다시 원래 페이지로 돌아오기 위해
-                                window.location.href = res.participant + 'Mypage'
-                            }
-                        }
-                    });
-                }
+                var row = <%-JSON.stringify(warrantys)%>
+                console.log(row);
             </script>
+
+            <% for(var i=0; i<warrantys.length; i++) {%>
+
+                <table width="100%" border="3">
+                    <tr>
+                        <td style="width:50%">
+                            <span>보증서 식별번호</span>
+                        </td>
+                        <td style="width:50%">
+                            <span><%=warrantys[i].id%></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%">
+                            <span>판매자 식별번호</span>
+                        </td>
+                        <td style="width:50%">
+                            <span><%=warrantys[i].seller_id%></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%">
+                            <span>구매자 식별번호</span>
+                        </td>
+                        <td style="width:50%">
+                            <span><%=warrantys[i].buyer_id%></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <form method="post" action="/showWarrantyDetail">
+                    <input type="text" name=id value=<%=warrantys[i].id%> hidden=true>
+                    <input type="text" name=seller_id value=<%=warrantys[i].seller_id%> hidden=true>
+                    <input type="submit" value="show_detail">
+                </form>
+                <br>
+                <% } %>
+
+
+                    <h2>상품 등록</h2>
+                    <form id="productRegister">
+                        <input type="text" placeholder="name" name="name"> <br>
+                        <input type="text" placeholder="description" name="description"> <br>
+                        <input type="text" placeholder="price" name="price"> <br>
+                        <input type="text" placeholder="picture" name="picture"> <br>
+                        <input type="button" value="register" name="register" onclick="productRegisterFunc()">
+                    </form>
+
+                    <br>
+                    <h2>로그아웃</h2>
+                    <form action="/sellerLogout" method="get">
+                        <input type="submit" value="logout">
+                    </form>
+
+                    <script>
+                        // 상품 등록
+                        function productRegisterFunc() {
+                            var reqJsonData = $("#productRegister").serializeObject(); // 폼 데이터 json 형식으로 받기
+                            $.ajax({
+                                method: 'POST',
+                                url: '/productRegister',
+                                data: reqJsonData,
+                                success: (res) => {
+                                    if (res.status == 1) { // 등록성공하면 다시 원래 페이지로 돌아오기 위해
+                                        window.location.href = res.participant + 'Mypage'
+                                    }
+                                }
+                            });
+                        }
+                    </script>
 
 </body>
 

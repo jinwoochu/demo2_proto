@@ -80,6 +80,14 @@
             </td>
         </tr>
     </table>
+
+
+    <form action="/editWarranty" method="post">
+        <input type="text" name=id value=<%=warrantyData.ID%> hidden=true>
+        <input type="submit" value="editWarranty">
+    </form>
+
+
     <input type="button" value="goBack" onclick="goBack()">
 
     <script>

@@ -14,7 +14,7 @@ var con = mysql.createConnection({
     database: "ling"
 });
 
-var REST_API_ADDRESS = 'http://192.168.192.34:3000/api/';
+var REST_API_ADDRESS = 'http://192.168.40.80:3000/api/';
 
 // 판매자 회원가입
 exports.register = function(req, res) {
@@ -129,14 +129,19 @@ exports.sellerMyPage = function(req, res, myCookie) {
             res.json(response);
             return;
         } else {
-            // 성공시 상품 등록 페이지와, 자신이 등록한 상품만 볼 수 있게 해준다.
+            // 성공시 상품 등록 페이지와, 자신이 등록한 상품과 보증서만 볼 수 있게 해준다.
             var sellerId = result[0].id;
             var selectQuery = "SELECT * FROM PRODUCTS WHERE seller_id=?";
             var selectQueryParams = [sellerId];
             con.query(selectQuery, selectQueryParams, function(err2, result2, field2) {
-                // console.log(result2);
-                res.render('seller_my_page.html', { "products": result2 });
-            })
+
+                var selectQuery2 = "SELECT * FROM WARRANTYS WHERE seller_id=?";
+                var selectQueryParams2 = [sellerId];
+                con.query(selectQuery2, selectQueryParams2, function(err3, result3, field3) {
+                    console.log(result3);
+                    res.render('seller_my_page.html', { "products": result2, "warrantys": result3 });
+                });
+            });
 
         }
     });

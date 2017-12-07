@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/updateWarranty" method="post">
+        <input style="width:30%" type="text" name=id value=<%=warrantyData.ID%> hidden >
+        <span>판매자 식별번호</span> <br> <input style="width:30%" type="text" name=sellerId value=<%=warrantyData.sellerId%> > <br> <br>
+        <span>상품 식별번호</span> <br> <input style="width:30%" type="text" name=productId value=<%=warrantyData.productId%> > <br> <br>
+        <span>구매자 식별번호</span> <br> <input style="width:30%" type="text" name=userId value=<%=warrantyData.userId%> ><br> <br>
+        <span>보증서 일련번호</span> <br> <input style="width:30%" type="text" name=serialNumber value=<%=warrantyData.serialNumber%> ><br> <br>
+        <span>상품명</span> <br> <input style="width:30%" type="text" name=productName value=<%=warrantyData.productName %> ><br> <br>
+        <span>가격</span> <br> <input style="width:30%" type="text" name=price value=<%=warrantyData.price%> ><br> <br>
+        <span>구매일</span> <br> <input style="width:30%" type="text" name=purchaseDay value=<%=warrantyData.purchaseDay%> ><br> <br>
+        <span>판매처</span> <br> <input style="width:30%" type="text" name=store value=<%=warrantyData.store%> ><br> <br>
+        <span>판매자</span> <br> <input style="width:30%" type="text" name=seller value=<%=warrantyData.seller%> ><br> <br>
+        <span>보증 만료일</span> <br> <input style="width:30%" type="text" name=ExpireDay value=<%=warrantyData.ExpireDay%> ><br> <br>
+        <span>보증내용</span> <br> <input style="width:30%" type="text" name=warrantyContents value=<%=warrantyData.warrantyContents%> ><br> <br>
+        <input type="submit" value="updateWarranty">
+    </form>
+
+
+    <input type="button" value="goBack" onclick="goBack()">
+
+    <script>
+        function goBack() {
+            history.back();
+        }
+    </script>
+</body>
+
+</html>

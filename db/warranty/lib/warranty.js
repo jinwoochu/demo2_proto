@@ -14,7 +14,7 @@ var con = mysql.createConnection({
     database: "ling"
 });
 
-var REST_API_ADDRESS = 'http://192.168.192.34:3000/api/';
+var REST_API_ADDRESS = 'http://192.168.40.80:3000/api/';
 
 // 보증서 등록
 exports.register = function(req, res, userCookie) {
@@ -48,7 +48,7 @@ exports.register = function(req, res, userCookie) {
             var nowTime = new Date();
 
             //seller website 구하기.
-            var selectQuery2 = "SELECT web_site FROM SELLERS WHERE id=?";
+            var selectQuery2 = "SELECT * FROM SELLERS WHERE id=?";
             var selectQueryParams2 = [sellerId];
 
             con.query(selectQuery2, selectQueryParams2, function(err2, result2, field2) {
@@ -83,7 +83,7 @@ exports.register = function(req, res, userCookie) {
                             "price": productData.price,
                             "purchaseDay": nowTime.toJSON(),
                             "store": result2[0].web_site, // seller의 웹사이트
-                            "seller": sellerId,
+                            "seller": result2[0].name, // seller의 이름
                             "ExpireDay": new Date(Date.parse(nowTime) + 365 * 1000 * 60 * 60 * 24),
                             "warrantyContents": "this warranty will expire after 1 year"
                         }
@@ -124,29 +124,100 @@ exports.showWarrantyDetail = function(req, res) {
 
     //블록체인에 있는 데이터를 검색해서 준다.
     var url = REST_API_ADDRESS + "Warranty/WARRANTY_" + id;
-    console.log(url);
     request(url, function(error, reqResponse, body) {
         var warrantyData = JSON.parse(body);
-        console.log(warrantyData);
-
         res.render('warranty_detail.html', { "warrantyData": warrantyData });
     });
 }
 
 
-// // 전체 상품 보기
-// exports.showAllProducts = function(req, res) {
+// 보증서 내용 수정하기
+exports.editWarranty = function(req, res, checkCookie) {
+    console.log(checkCookie);
 
-//     var selectQuery = "SELECT * FROM PRODUCTS";
-//     con.query(selectQuery, function(err, result, field) {
-//         if (err) {
-//             response = makeResponse(0, "잘못된 쿼리문입니다.", {});
-//             res.json(response);
-//             return;
-//         }
-//         res.render('show_all_products.html', { 'products': result });
-//     });
-// }
+    //유저 DB중에 쿠키와 대응한 email이 있으면 reject 시킨다.
+    var selectQuery = "SELECT * FROM USERS WHERE email=?";
+    var selectQueryParams = [checkCookie];
+
+    //userId 구하기.
+    con.query(selectQuery, selectQueryParams, function(err, result, field) {
+        if (err) {
+            response = makeResponse(0, "잘못된 쿼리문입니다.", {});
+            res.json(response);
+            return;
+        }
+        if (result.length != '0') { // 이메일이 존재하는 것 
+            res.redirect('/userMyPage');
+        } else {
+            var id = req.body.id;
+            var DBid = parseFloat(id.split('_')[1]);
+
+            // 블록체인에 있는 상세정보부터 보여준다 일단.
+            var url = REST_API_ADDRESS + "Warranty/" + id;
+            request(url, function(error, reqResponse, body) {
+                var warrantyData = JSON.parse(body);
+                res.render('warranty_edit.html', { "warrantyData": warrantyData });
+            });
+        }
+    });
+}
+exports.updateWarranty = function(req, res) {
+    console.log(req.body)
+    var id = req.body.id;
+    var sellerId = req.body.sellerId
+    var productId = req.body.productId
+    var userId = req.body.userId
+    var serialNumber = req.body.serialNumber
+    var productName = req.body.productName
+    var price = req.body.price
+    var purchaseDay = req.body.purchaseDay
+    var store = req.body.store
+    var seller = req.body.seller
+    var ExpireDay = req.body.ExpireDay
+    var warrantyContents = req.body.warrantyContents
+
+
+    var requestJsonData = {
+        "$class": "org.acme.ling.ChangeWarranty",
+        "warranty": "resource:org.acme.ling.Warranty#" + id,
+        "sellerId": sellerId,
+        "productId": productId,
+        "userId": userId,
+        "serialNumber": serialNumber,
+        "productName": productName,
+        "price": price,
+        "purchaseDay": purchaseDay,
+        "store": store,
+        "seller": seller,
+        "ExpireDay": ExpireDay,
+        "warrantyContents": warrantyContents,
+        "timestamp": (new Date()).toJSON()
+    }
+
+    var options = {
+        url: REST_API_ADDRESS + 'ChangeWarranty',
+        method: 'POST',
+        json: requestJsonData
+    };
+
+    request(options, function(error, reqResponse, body) {
+        if (!error && reqResponse.statusCode == 200) {
+            // 블록체인에도 데이터 넣기 성공하면 
+            res.redirect('/sellerMyPage');
+        } else {
+            response = makeResponse(0, "블록체인에 접근실패", {});
+            res.json(response);
+        }
+
+    });
+
+
+
+}
+
+
+
+
 
 
 

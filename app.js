@@ -145,6 +145,17 @@ app.post("/showWarrantyDetail", function(req, res) {
     warrantyDB.showWarrantyDetail(req, res);
 });
 
+// 보증서 내용 고치기
+app.post("/editWarranty", function(req, res) {
+    var checkCookie = req.signedCookies.email;
+    warrantyDB.editWarranty(req, res, checkCookie);
+});
+
+// 보증서 내용 업데이트
+app.post("/updateWarranty", function(req, res) {
+    warrantyDB.updateWarranty(req, res);
+});
+
 app.listen(3000, function() {
     console.log("Server listening on http://localhost:3000");
 });
