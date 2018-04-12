@@ -108,11 +108,7 @@ exports.register = function(req, res, userCookie) {
                     }
                 });
             })
-
         });
-
-
-
     });
 }
 
@@ -211,15 +207,7 @@ exports.updateWarranty = function(req, res) {
 
     });
 
-
-
 }
-
-
-
-
-
-
 
 // 리스폰스 만드는 함수
 function makeResponse(status, message, data) {

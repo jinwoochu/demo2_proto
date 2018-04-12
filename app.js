@@ -14,6 +14,9 @@ var productDB = require('./db/product');
 var warrantyDB = require('./db/warranty');
 
 
+//요청 페이지의 내용을 받아온다. test
+var request = require('request');
+
 
 
 
@@ -42,6 +45,46 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true, parameterLimit: 5
 
 var cookie = require('cookie-parser');
 app.use(cookie('!@#%%@#@'));
+
+
+// 열정학기제 테스트
+app.post('/test', function(req, res) {
+        // console.log(req.body)
+
+        // 블록체인에 넣으면됨
+
+        var REST_API_ADDRESS = "http://192.168.0.129:3000/api/"
+
+
+        var requestJsonData = {
+            "$class": "org.acme.passion.State",
+            "ID": "STATE_10",
+            "light_max": req.body.max,
+            "light_min": req.body.min,
+            "gps_x": req.body.GPS.lng,
+            "gps_y": req.body.GPS.lat
+        }
+
+        var options = {
+            url: REST_API_ADDRESS + 'State',
+            method: 'POST',
+            json: requestJsonData
+        };
+
+        request(options, function(error, reqResponse, body) {
+            if (!error && reqResponse.statusCode == 200) {
+                // 블록체인에도 데이터 넣기 성공하면 
+                res.json(req.body)
+            }
+        })
+
+
+    })
+    // app.get('/test', function(req, res) {
+    //     res.send(req)
+    //     console.log(req)
+    // });
+
 
 
 //첫 화면
@@ -158,4 +201,4 @@ app.post("/updateWarranty", function(req, res) {
 
 app.listen(3000, function() {
     console.log("Server listening on http://localhost:3000");
-});
+})

@@ -18,10 +18,9 @@ var REST_API_ADDRESS = 'http://192.168.40.80:3000/api/';
 
 // 상품 등록
 exports.register = function(req, res, sellerCookie) {
-
     var sellerId;
     var name = req.body.name;
-    var description = req.body.description;
+    var description = req.body.description; 
     var price = req.body.price;
     var picture = req.body.picture;
 
